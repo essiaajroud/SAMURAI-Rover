@@ -6,7 +6,7 @@ SAMURAI is an AI-powered detection and tracking system, now integrated with ROS2
 
 ## Features
 
-- YOLOv8-based object detection
+- YOLOv11-based object detection
 - Real-time tracking system
 - ROS2 integration (Foxy/Humble)
 - Web-based dashboard
