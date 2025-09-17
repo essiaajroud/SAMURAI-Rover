@@ -2,7 +2,7 @@
 
 ## Description
 
-SAMURAI (Smart Autonomous Mobile Unit with Real-time AI) is an AI-powered detection and tracking system, now integrated with ROS2 for robotics applications.
+SAMURAI is an AI-powered detection and tracking system, now integrated with ROS2 for robotics applications.
 
 ## Features
 
