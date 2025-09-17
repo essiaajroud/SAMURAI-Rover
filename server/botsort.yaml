@@ -1,0 +1,29 @@
+# BotSORT Configuration - Advanced Military Object Tracking
+
+# Core tracking parameters
+tracker_type: botsort
+track_high_thresh: 0.8      # Augmenté pour plus de stabilité
+track_low_thresh: 0.5       # Augmenté pour éviter les faux positifs
+new_track_thresh: 0.4       # Augmenté pour valider les nouveaux objets
+track_buffer: 180           # Augmenté pour garder les objets plus longtemps
+match_thresh: 0.85          # Augmenté pour une meilleure association
+fuse_score: True
+
+# Motion and ReID
+gmc_method: sparseOptFlow
+proximity_thresh: 0.6
+appearance_thresh: 0.4
+with_reid: True            # Active le modèle ReID
+
+# Track stability
+min_hits: 8                 # Augmenté pour valider les objets après plus de frames
+max_age: 120                # Augmenté pour garder les objets plus longtemps
+motion_weight: 0.1          # Diminue l'importance du mouvement
+appearance_weight: 0.9      # Augmente l'importance de l'apparence
+
+# Kalman filter
+kalman_filter:
+  process_noise: 0.01
+  measurement_noise: 0.1
+  measurement_noise: 0.1
+

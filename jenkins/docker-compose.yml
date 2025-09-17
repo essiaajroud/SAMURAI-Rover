@@ -1,0 +1,32 @@
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    container_name: jenkins
+   
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    
+    dns:
+      - 8.8.8.8
+
+    privileged: true
+    user: root
+    
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+      
+volumes:
+  jenkins_data: {}

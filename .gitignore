@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ROS
+build/
+install/
+log/
+
+# Node
+node_modules/
+npm-debug.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# MLOps
+mlruns/
+runs/
+*.pt
+*.onnx
+models/
+dataset/
+
+# Modèles et fichiers IA
+*.onnx
+*.pt
+*.pkl
+*.ckpt
+*.h5
+
+# Fichiers lourds/binaire
+*.dll
+*.lib
+*.pyd
+*.mp4
+*.avi
+*.mov
+
+# Fichiers SQLite
+*.db
+
+# Cache et logs
+__pycache__/
+*.log
+
+allfiles/
+/dataset
+
+credentials.json
+
+*.cache
+
+jenkins\jenkins-backup.tar

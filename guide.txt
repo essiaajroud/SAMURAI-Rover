@@ -1,0 +1,123 @@
+sudo apt install ros-humble-rosbridge-server
+
+1-Construire l'environnement ROS2 :
+cd ros2_ws
+colcon build
+source install/setup.bash
+
+2-Lancer la simulation :
+ros2 launch samurai_simulation simulation.launch.py
+
+3-Tests et visualisation :
+# Visualiser les topics
+ros2 topic list
+
+# Visualiser les détections
+ros2 run rqt_image_view rqt_image_view
+
+# Publier des images de test
+ros2 run image_publisher image_publisher_node image_file.jpg
+
+4-lancement:
+ros2 launch samurai_launch full_system.launch.py
+
+5-frontend:
+cd client
+npm install
+npm run serve
+
+---FOXY VERSION ---
+source /opt/ros/foxy/setup.bash
+cd ros2_ws
+colcon build
+source install/setup.bash
+
+# filepath: d:\SAMURAI_Rover\SAMURAI\ros2_ws\src\samurai_detection\samurai_detection\yolo_node.py
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image, CameraInfo
+from vision_msgs.msg import Detection2DArray, Detection2D
+from cv_bridge import CvBridge
+import numpy as np
+import ros2_numpy  # Foxy specific
+
+class YOLODetectorNode(Node):
+    def __init__(self):
+        super().__init__('yolo_detector')
+        
+        # Foxy specific parameter declaration
+        self.declare_parameter('model_path', 'server/models/best2.pt')
+        model_path = self.get_parameter('model_path').get_parameter_value().string_value
+        
+        # ...existing code...
+        
+    def image_callback(self, msg):
+        try:
+            # Foxy specific image conversion
+            cv_image = ros2_numpy.numpify(msg)
+            # ...existing code...
+            
+        except Exception as e:
+            self.get_logger().error(f'Error processing image: {str(e)}')
+    
+    # ...existing code...
+
+
+# filepath: d:\SAMURAI_Rover\SAMURAI\ros2_ws\src\samurai_launch\launch\full_system.launch.py
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from ament_index_python.packages import get_package_share_directory
+import os
+
+def generate_launch_description():
+    # Foxy utilise une syntaxe légèrement différente pour les chemins
+    pkg_share = get_package_share_directory('samurai_simulation')
+    
+    # Launch simulation
+    simulation_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_share, 'launch', 'simulation.launch.py')
+        )
+    )
+    
+    # ROS2 bridge - Foxy specific configuration
+    rosbridge_node = Node(
+        package='rosbridge_server',
+        node_executable='rosbridge_websocket',  # Foxy uses node_executable instead of executable
+        name='rosbridge_websocket',
+        parameters=[{'port': 9090}]
+    )
+    
+    # Detection node
+    detection_node = Node(
+        package='samurai_detection',
+        node_executable='yolo_node',
+        name='yolo_detector'
+    )
+    
+    # Tracking node
+    tracking_node = Node(
+        package='samurai_tracking',
+        node_executable='tracking_node',
+        name='target_tracker'
+    )
+
+    return LaunchDescription([
+        simulation_launch,
+        rosbridge_node,
+        detection_node,
+        tracking_node
+    ])
+
+---GIT SETUP---
+# Donner les permissions d'exécution au script
+chmod +x git_init.sh
+
+# Exécuter le script d'initialisation Git
+./git_init.sh
+
+# Si vous avez des problèmes d'authentification, configurez votre token :
+git remote set-url origin https://YOUR_GITHUB_TOKEN@github.com/essiaajroud/SAMURAI-Rover.git
+git push -f origin main

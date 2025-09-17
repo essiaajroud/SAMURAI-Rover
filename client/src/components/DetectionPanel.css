@@ -1,0 +1,316 @@
+/* DetectionPanel.css (VERSION COMPLÈTE, CORRIGÉE ET AMÉLIORÉE) */
+
+/* Core panel layout */
+.detection-panel {
+  background: rgba(26, 26, 26, 0.95);
+  border-radius: 8px;
+  padding: 15px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  border: 1px solid #00ff00;
+  box-shadow: 0 4px 16px rgba(0, 255, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Table container and scrolling */
+.detections-table {
+  flex: 1;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+}
+
+.table-container {
+  overflow-y: auto;
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Table styling */
+.detections-table table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.detections-table th,
+.detections-table td {
+  font-size: 11px;
+  padding: 6px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 0;
+}
+
+/* Définir des largeurs fixes pour chaque colonne */
+.detections-table th:nth-child(1),
+.detections-table td:nth-child(1) { /* ID */
+  width: 10%;
+}
+
+.detections-table th:nth-child(2),
+.detections-table td:nth-child(2) { /* DateTime/Object */
+  width: 25%;
+}
+
+.detections-table th:nth-child(3),
+.detections-table td:nth-child(3) { /* Object/Confidence */
+  width: 20%;
+}
+
+.detections-table th:nth-child(4),
+.detections-table td:nth-child(4) { /* Confidence/GPS */
+  width: 15%;
+}
+
+.detections-table th:nth-child(5),
+.detections-table td:nth-child(5) { /* GPS (si présent) */
+  width: 30%;
+}
+
+/* Supprimer le scroll horizontal */
+.table-container::-webkit-scrollbar-horizontal {
+  display: none;
+}
+
+.detections-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.detections-table th {
+  background: rgba(42, 42, 42, 0.95);
+  color: #00ff00;
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 2px solid #00ff00;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(5px);
+}
+
+.detections-table td {
+  padding: 8px 8px;
+  border-bottom: 1px solid #333;
+  transition: background 0.3s ease;
+  vertical-align: middle;
+}
+
+.detections-table tr:last-child td {
+  border-bottom: none;
+}
+
+.detections-table tr:hover {
+  background: rgba(0, 255, 0, 0.1);
+}
+
+/* Status messages */
+.no-data-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-data-message p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.no-data-message p:first-child {
+  font-size: 18px;
+  color: #00ff00;
+  font-weight: bold;
+}
+
+/* Confidence badge */
+.confidence-badge {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+}
+
+.confidence-badge.high {
+  background: rgba(0, 255, 0, 0.2);
+  color: #00ff00;
+}
+
+.confidence-badge.medium {
+  background: rgba(255, 165, 0, 0.2);
+  color: #ffa500;
+}
+
+/* Scrollbar styling */
+.detections-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.detections-table::-webkit-scrollbar-track {
+  background: rgba(26, 26, 26, 0.5);
+  border-radius: 4px;
+}
+
+.detections-table::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 4px;
+}
+
+.detections-table::-webkit-scrollbar-thumb:hover {
+  background: #00cc00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* --- AMÉLIORATION DU BOUTON EXPORT --- */
+
+.export-button {
+  /* Style de base */
+  background: rgba(42, 42, 42, 0.8);
+  border: 1px solid #444;
+  color: #00ff00;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Consolas', 'Courier New', monospace; /* Police style "hacker" */
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(5px);
+  
+  /* Comportement du curseur et alignement icône/texte */
+  cursor: pointer; /* Change le curseur en main */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espace entre l'icône et le texte */
+  text-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
+}
+
+.export-button:hover:not(:disabled) {
+  /* Effet au survol */
+  background: #00ff00;
+  color: #1a1a1a;
+  border-color: #00ff00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 255, 0, 0.4), 0 0 10px rgba(0, 255, 0, 0.3);
+  text-shadow: none;
+}
+
+.export-button:active:not(:disabled) {
+  /* Effet au clic */
+  transform: translateY(0px); /* Simule l'enfoncement du bouton */
+  box-shadow: 0 2px 8px rgba(0, 255, 0, 0.3);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.export-button:disabled {
+  /* Style pour l'état désactivé */
+  background: rgba(26, 26, 26, 0.5);
+  border-color: #333;
+  color: #666;
+  cursor: not-allowed; /* Curseur "interdit" */
+  text-shadow: none;
+}
+  
+/* --- FIN DE L'AMÉLIORATION DU BOUTON --- */
+
+.panel-tabs {
+  display: flex;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #333;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: #888;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tab-button:hover {
+  color: #00ff00;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.tab-button.active {
+  color: #00ff00;
+  border-bottom-color: #00ff00;
+  background: rgba(0, 255, 0, 0.15);
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #444;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-size: 12px;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.filter-group select,
+.filter-group input[type="range"] {
+  background: rgba(42, 42, 42, 0.9);
+  border: 1px solid #444;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.filter-group select:focus,
+.filter-group input[type="range"]:focus {
+  border-color: #00ff00;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+.filter-group span {
+  font-size: 12px;
+  color: #00ff00;
+  min-width: 35px;
+  font-weight: bold;
+}
+
+.panel-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
